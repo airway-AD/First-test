@@ -1,0 +1,149 @@
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --accent: #22c55e;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --danger: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: linear-gradient(150deg, #020617, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.container {
+  width: min(900px, 92vw);
+  margin: 2rem auto;
+  display: grid;
+  gap: 1rem;
+}
+
+header h1 {
+  margin-bottom: 0.4rem;
+}
+
+header p {
+  margin-top: 0;
+  color: var(--muted);
+}
+
+.card {
+  background: color-mix(in srgb, var(--card) 90%, black 10%);
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+select,
+input,
+button {
+  font: inherit;
+}
+
+select,
+input[type='number'] {
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid #475569;
+  background: #0b1224;
+  color: var(--text);
+}
+
+input[type='range'] {
+  accent-color: var(--accent);
+}
+
+button {
+  background: var(--accent);
+  border: none;
+  border-radius: 999px;
+  color: #052e16;
+  font-weight: 700;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button.secondary {
+  background: #334155;
+  color: var(--text);
+}
+
+.metrics .metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.8rem;
+}
+
+.metrics article {
+  background: #0b1224;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 0.8rem;
+}
+
+.metrics p {
+  font-size: 1.3rem;
+  margin: 0.2rem 0 0;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#workout-list {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.workout-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #334155;
+  background: #0b1224;
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+}
+
+.workout-item p {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+}
+
+.delete-btn {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  padding: 0.35rem 0.6rem;
+}

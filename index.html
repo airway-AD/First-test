@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SportFlow - Mon app de sport</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>🏋️ SportFlow</h1>
+        <p>Crée tes séances, suis tes objectifs et reste motivé·e.</p>
+      </header>
+
+      <section class="card">
+        <h2>Nouvelle séance</h2>
+        <form id="workout-form">
+          <label>
+            Type de sport
+            <select id="sport" required>
+              <option value="">Choisis un sport</option>
+              <option value="Course">Course</option>
+              <option value="Musculation">Musculation</option>
+              <option value="Vélo">Vélo</option>
+              <option value="Yoga">Yoga</option>
+              <option value="Natation">Natation</option>
+            </select>
+          </label>
+
+          <label>
+            Durée (minutes)
+            <input id="duration" type="number" min="5" max="300" required />
+          </label>
+
+          <label>
+            Intensité
+            <input id="intensity" type="range" min="1" max="10" value="5" />
+            <span id="intensity-value">5/10</span>
+          </label>
+
+          <button type="submit">Ajouter la séance</button>
+        </form>
+      </section>
+
+      <section class="card metrics">
+        <h2>Stats de la semaine</h2>
+        <div class="metric-grid">
+          <article>
+            <h3>Séances</h3>
+            <p id="sessions-count">0</p>
+          </article>
+          <article>
+            <h3>Minutes totales</h3>
+            <p id="minutes-count">0</p>
+          </article>
+          <article>
+            <h3>Objectif atteint</h3>
+            <p id="goal-status">Non</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="list-header">
+          <h2>Mes séances</h2>
+          <button id="clear-btn" class="secondary">Tout supprimer</button>
+        </div>
+        <ul id="workout-list" aria-live="polite"></ul>
+      </section>
+    </main>
+
+    <template id="workout-item-template">
+      <li class="workout-item">
+        <div>
+          <strong class="sport-name"></strong>
+          <p class="details"></p>
+        </div>
+        <button class="delete-btn" title="Supprimer">✖</button>
+      </li>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
