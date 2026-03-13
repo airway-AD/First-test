@@ -3,78 +3,171 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SportFlow - Mon app de sport</title>
+    <title>To-Dir — Smart Todo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="container">
-      <header>
-        <h1>🏋️ SportFlow</h1>
-        <p>Crée tes séances, suis tes objectifs et reste motivé·e.</p>
+    <main class="app-shell">
+      <header class="topbar card">
+        <div>
+          <p class="eyebrow">Productivité augmentée</p>
+          <h1>🟢 To-Dir</h1>
+          <p class="subtitle">Une to-do list intelligente, rapide et ultra focus.</p>
+        </div>
+        <div class="clock-wrap" aria-live="polite">
+          <span id="clock-time">--:--</span>
+          <span id="clock-date">--</span>
+        </div>
       </header>
 
-      <section class="card">
-        <h2>Nouvelle séance</h2>
-        <form id="workout-form">
-          <label>
-            Type de sport
-            <select id="sport" required>
-              <option value="">Choisis un sport</option>
-              <option value="Course">Course</option>
-              <option value="Musculation">Musculation</option>
-              <option value="Vélo">Vélo</option>
-              <option value="Yoga">Yoga</option>
-              <option value="Natation">Natation</option>
+      <section class="card composer">
+        <h2>Nouvelle tâche</h2>
+        <p class="helper">
+          Astuce: écris naturellement, ex: <em>"Préparer budget #finance demain p1 45m"</em>.
+        </p>
+        <form id="task-form" class="task-form">
+          <div class="field full">
+            <label for="task-title">Titre</label>
+            <input id="task-title" type="text" required maxlength="140" placeholder="Ex: Appeler le client" />
+          </div>
+          <div class="field">
+            <label for="task-project">Projet</label>
+            <input id="task-project" type="text" placeholder="Ex: Travail" maxlength="40" />
+          </div>
+          <div class="field">
+            <label for="task-tags">Tags</label>
+            <input id="task-tags" type="text" placeholder="Ex: urgent,admin" maxlength="80" />
+          </div>
+          <div class="field">
+            <label for="task-priority">Priorité</label>
+            <select id="task-priority">
+              <option value="1">P1 — Critique</option>
+              <option value="2" selected>P2 — Important</option>
+              <option value="3">P3 — Normal</option>
+              <option value="4">P4 — Faible</option>
             </select>
-          </label>
+          </div>
+          <div class="field">
+            <label for="task-duration">Durée estimée (min)</label>
+            <input id="task-duration" type="number" min="5" max="480" step="5" value="30" />
+          </div>
+          <div class="field">
+            <label for="task-due-date">Date d'échéance</label>
+            <input id="task-due-date" type="date" />
+          </div>
+          <div class="field">
+            <label for="task-due-time">Heure</label>
+            <input id="task-due-time" type="time" />
+          </div>
+          <div class="field full row-field">
+            <label class="checkbox">
+              <input id="task-recurring" type="checkbox" />
+              Répéter chaque jour
+            </label>
+            <label class="checkbox">
+              <input id="task-deep-work" type="checkbox" />
+              Session Deep Work
+            </label>
+          </div>
 
-          <label>
-            Durée (minutes)
-            <input id="duration" type="number" min="5" max="300" required />
-          </label>
-
-          <label>
-            Intensité
-            <input id="intensity" type="range" min="1" max="10" value="5" />
-            <span id="intensity-value">5/10</span>
-          </label>
-
-          <button type="submit">Ajouter la séance</button>
+          <div class="full actions">
+            <button type="submit">Ajouter à To-Dir</button>
+            <button id="smart-parse-btn" type="button" class="secondary">Auto-analyse du titre</button>
+          </div>
         </form>
       </section>
 
-      <section class="card metrics">
-        <h2>Stats de la semaine</h2>
-        <div class="metric-grid">
-          <article>
-            <h3>Séances</h3>
-            <p id="sessions-count">0</p>
-          </article>
-          <article>
-            <h3>Minutes totales</h3>
-            <p id="minutes-count">0</p>
-          </article>
-          <article>
-            <h3>Objectif atteint</h3>
-            <p id="goal-status">Non</p>
-          </article>
+      <section class="grid-stats">
+        <article class="card metric">
+          <h3>Tâches actives</h3>
+          <p id="active-count">0</p>
+        </article>
+        <article class="card metric">
+          <h3>Complétées aujourd'hui</h3>
+          <p id="done-today-count">0</p>
+        </article>
+        <article class="card metric">
+          <h3>Retard</h3>
+          <p id="overdue-count">0</p>
+        </article>
+        <article class="card metric">
+          <h3>Focus score</h3>
+          <p id="focus-score">0</p>
+        </article>
+      </section>
+
+      <section class="card smart-panel">
+        <div>
+          <h2>Priorité intelligente du moment</h2>
+          <p id="smart-suggestion">Ajoute des tâches pour recevoir une recommandation.</p>
         </div>
+        <button id="start-focus-btn" class="secondary">Démarrer 25 min focus</button>
+      </section>
+
+      <section class="card controls">
+        <div class="control-group">
+          <label for="search">Recherche</label>
+          <input id="search" type="search" placeholder="Titre, tags, projet..." />
+        </div>
+        <div class="control-group">
+          <label for="filter-status">Statut</label>
+          <select id="filter-status">
+            <option value="all">Toutes</option>
+            <option value="active">Actives</option>
+            <option value="done">Terminées</option>
+            <option value="overdue">En retard</option>
+            <option value="today">À faire aujourd'hui</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="filter-priority">Priorité</label>
+          <select id="filter-priority">
+            <option value="all">Toutes</option>
+            <option value="1">P1</option>
+            <option value="2">P2</option>
+            <option value="3">P3</option>
+            <option value="4">P4</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="sort-by">Tri</label>
+          <select id="sort-by">
+            <option value="smart">Smart score</option>
+            <option value="due">Échéance</option>
+            <option value="priority">Priorité</option>
+            <option value="created">Date création</option>
+          </select>
+        </div>
+        <button id="clear-done-btn" class="secondary">Supprimer terminées</button>
       </section>
 
       <section class="card">
         <div class="list-header">
-          <h2>Mes séances</h2>
-          <button id="clear-btn" class="secondary">Tout supprimer</button>
+          <h2>Liste des tâches</h2>
         </div>
-        <ul id="workout-list" aria-live="polite"></ul>
+        <ul id="task-list" class="task-list" aria-live="polite"></ul>
       </section>
     </main>
 
-    <template id="workout-item-template">
-      <li class="workout-item">
-        <div>
-          <strong class="sport-name"></strong>
-          <p class="details"></p>
+    <template id="task-item-template">
+      <li class="task-item">
+        <label class="task-check-wrap">
+          <input class="task-check" type="checkbox" />
+          <span></span>
+        </label>
+        <div class="task-main">
+          <div class="task-top">
+            <strong class="task-title"></strong>
+            <span class="task-badge"></span>
+          </div>
+          <p class="task-meta"></p>
+          <div class="tag-line"></div>
         </div>
         <button class="delete-btn" title="Supprimer">✖</button>
       </li>
